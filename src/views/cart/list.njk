@@ -30,7 +30,9 @@
                                     <input style="width: 100px" class="form-control" type="text" placeholder="Quantidade" name="quantity" />
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                                    <button type="submit" class="btn btn-primary" onclick="(function(){
+                                    document.location.reload(true);
+                                    })()">Adicionar</button>
                                 </td>
                             </form>
                         </tr>
@@ -96,6 +98,14 @@
             </div>
         </div>
     {% endblock %}
+
+    <script>
+        function teste() {
+            {# document.location.reload(true); #}
+            alert("teste");
+        }
+    </script>
+
 
        
 
