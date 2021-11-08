@@ -68,6 +68,17 @@
                     <p>Total:</p> 
                     <span>{{cart.total.formattedPrice}}</span>
                 </div>
+
+                    <form action="/cart" method="POST">
+                        <div class="change">
+                            <input type="text" placeholder="Troco" value="{{change}}" name="change"/>
+                            
+                            <div class="totalChange">
+                                <p>Troco:</p> 
+                                <span>{{changeFormate}}</span>
+                            </div>
+                        </div>
+                    </form>
                 
                     <form  action="/sales" method="POST">
 
@@ -78,7 +89,6 @@
                         <div class="finish">
                         <button class="btn btn-success"> Finalizar Venda </button>
                     </form>
-
                             <form  action="/sales/deleteall?_method=DELETE" method="POST">
                                 <button class="btn btn-danger"> Cancelar Venda </button>
                             </form>

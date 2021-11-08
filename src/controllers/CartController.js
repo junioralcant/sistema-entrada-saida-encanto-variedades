@@ -6,6 +6,7 @@ const formatCurrency = require("../lib/formatCurrency");
 class CartController {
   async index(req, res) {
     const filters = {};
+    const {change} = req.body;
 
     if (req.body.nome) {
       filters.nome = new RegExp(req.body.nome, "i");
@@ -65,7 +66,15 @@ class CartController {
 
     cart.total.formattedPrice = formatCurrency.brl(cart.total.price);
 
-    return res.render("cart/list", { cart });
+    let changeFormate = 0;
+
+    if(change) {
+      changeFormate = formatCurrency.brl(change - cart.total.price);
+    } else {
+      changeFormate = formatCurrency.brl(0);
+    }
+
+    return res.render("cart/list", { cart, changeFormate, change });
   }
 
   async addOne(req, res) {
