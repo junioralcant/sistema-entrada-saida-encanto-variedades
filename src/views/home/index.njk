@@ -1,0 +1,40 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Loja Maramba</title>
+    <link rel="stylesheet" href="/home.css"/>
+{% endblock %}    
+
+{% block content %}
+    <div class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/productslist">
+                    <button class="button product">Cadastro de Produtos <i class="bi bi-cart-check"></i></button>
+                </form>
+            </div>   
+            <div class="col-md-4">
+                <form action="/cart">
+                    <button class="button sale">Realizar Vendas <i class="bi bi-bag"></i></button>
+                </form>
+            </div> 
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/entrancesandexits">
+                    <button class="button entrance-exit">Entrada e Saída <i class="bi bi-bar-chart-line"></i></button>
+                </form>
+            </div>   
+            <div class="col-md-4">
+                <form action="/sales">
+                    <button class="button datails-sales">Detalhes de Vendas <i class="bi bi-graph-up"></i></button>
+                </form>
+            </div> 
+        </div>
+    </div>
+{% endblock %}
+        
+        

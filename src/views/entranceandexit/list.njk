@@ -1,0 +1,27 @@
+{% extends "layout.njk" %}
+{% block head %}
+    <title>Entradas e Saídas</title>
+     <link rel="stylesheet" href="/entranceandexit.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h4>Entrada e Saída</h4>
+
+     <div class="row">            
+            <div class="col-md-4 box-data">
+                <br/>
+                <a href="/entrances" class="data balance">Entradas <i class="bi bi-bar-chart balance "></i></a>
+            </div>
+            <div class="col-md-4 box-data">
+                <br/>
+                <a href="/exits" class="data exit">Saídas <i class="bi bi-bar-chart-steps exit"></i></a>
+            </div>
+            <div class="col-md-4 box-data">
+                <br/>
+                <a href="/entrancesandexitsdatails" class="data entrance">Detalhes <i class="bi bi-bar-chart-line entrance"></i> </a>
+            </div>
+        </div>
+</div>    
+{% endblock %}
+       

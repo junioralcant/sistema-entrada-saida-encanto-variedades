@@ -1,0 +1,93 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+        <title>Cart</title>
+        <link rel="stylesheet" href="/cart.css"/>
+    {% endblock %}
+
+    {% block content %}
+        <div class="content">
+            <h4>Frente de Caixa</h4>
+            <form action="/cart" method="post" class="search">
+                <input class="form-control" type="text" placeholder="Código do produto" name="searchBarcode" value="{{searchBarcode}}" autofocus/>
+                <input class="form-control" type="text" placeholder="Nome do produto" name="nome" />
+                <button type="submit" class="btn btn-primary">Pesquisar</button>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Ação</th>
+                </tr>
+                {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.formattedSalePrice }}</td>
+                            <form action="/cart/add-one/{{product._id}}" method="post">
+                                <td>
+                                    <input style="width: 100px" class="form-control" type="text" placeholder="Quantidade" name="quantity" />
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                                </td>
+                            </form>
+                        </tr>
+                {% endfor %}
+            </table>
+
+            <div class="items">
+                {% for item in cart.items %}
+                    <div class="item">
+                        <a href="/products/{{item.product._id}}">
+                            <span class="title">{{item.product.name}}</span>
+                        </a>
+
+                        <span class="quantity">QTD: {{item.quantity}}</span>
+
+                        <span class="price">Valor: {{item.formattedPrice}}</span>
+
+                        <div class="quantity-control">
+                            <form action="/cart/remove-one/{{item.product._id}}" method="post">
+                                <button class="remove"> <i class="bi bi-clipboard-minus"></i> </button>
+                            </form>
+
+                            <form action="/cart/add-one/{{item.product._id}}" method="post">
+                                <button type="submit"> <i class="bi bi-clipboard-plus"></i> </button>
+                            </form>
+                        </div>
+
+                        <form class="trash" action="/cart/delete/{{item.product._id}}" method="POST">
+                            <button class="delete"> <i class="bi bi-x-octagon-fill"></i> </button>
+                        </form>
+                    </div>
+                    
+                {% endfor %}
+                <div class="total">
+                    <p>Total:</p> 
+                    <span>{{cart.total.formattedPrice}}</span>
+                </div>
+                
+                    <form  action="/sales" method="POST">
+
+                        <div class="descount">
+                            <input type="text" placeholder="Desconto" name="descount"/>
+                        </div>
+
+                        <div class="finish">
+                        <button class="btn btn-success"> Finalizar Venda </button>
+                    </form>
+
+                            <form  action="/sales/deleteall?_method=DELETE" method="POST">
+                                <button class="btn btn-danger"> Cancelar Venda </button>
+                            </form>
+                        </div>
+            </div>
+        </div>
+    {% endblock %}
+
+       
+
+
+

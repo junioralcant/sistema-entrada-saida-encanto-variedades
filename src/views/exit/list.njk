@@ -1,0 +1,96 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Saídas</title>
+    <link rel="stylesheet" href="/exit.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+          <div class="row">
+            <div class="col-md-6">
+                <h4>Saídas</h4>
+            </div>
+            <div class="col-md-6 box-balance">
+                <strong class="sales">Saídas: {{ exits.length }} </strong>
+                <strong class="balance">Total: {{ total }}</strong>
+            </div>
+        </div>
+        <form class="cad" action="/exits" method="post">
+            <div class="row">
+                <p class="message-error">{{message}}</p>
+                <div class="col-md-3">
+                    <label class="form-label">Descrição da despesa *</label>
+                    <input class="form-control" type="text" name="descriptionExit" placeholder="Descrição da dispesa" value="{{descriptionExit}}" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Valor *</label>
+                    <input class="form-control" type="text" name="value" placeholder="Valor" value="{{value}}" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Data *</label>
+                    <input class="form-control" type="date" name="date" placeholder="Data" value="{{date}}"/>
+                </div>
+                 <div class="col-md-3">
+                 <br/>
+                    <button class="btn btn-primary bnt-exit"  type="submit">Salvar</button>
+                </div>
+            </div>
+        </form>
+
+        <h4>Listagem de Saídas</h4>
+
+        <form class="search" action="/exitsdates" method="post">
+            <div class="row">            
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label">Data Inicial</label>
+                    <input id="startDate" value="{{startDate}}" class="form-control" type="date" name="startDate" />
+                </div>
+                <div class="col-md-4">
+                    <label for="finalDate" class="form-label">Data final</label>
+                    <input id="finalDate" value="{{finalDate}}" class="form-control" type="date" name="finalDate" />
+                    </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary bnt-exit" type="submit">Pesquisar</button>
+                    {% if dateFilter != false %}
+                        <a href="/exits" class="btn btn-secondary">Limpar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Descrição da Dispesa</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Ação</th>
+            </tr>
+            {% for exit in exits %}
+                <tr>
+                    <td>{{ exit.descriptionExit }}</td>
+                    <td>{{ exit.formattedValue }}</td>
+                    <td>{{ exit.formattedDate }}</td>
+                    <td>
+                        <div class="action">
+                            <a href="/exits/edit/{{exit._id}}"><i class="bi bi-pencil-fill"></i></a>
+                            <form action="/exits/delete/{{exit._id}}?_method=DELETE" method="post" onSubmit="deleteExit(event)" >
+                                <button class="delete" type="submit"><i class="bi bi-trash-fill"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+<script>
+    function deleteExit(e) {
+        if(!window.confirm("Deseja realmente deletar essa despesa ?")) {
+            e.returnValue = false; 
+        }
+    }
+</script> 
+{% endblock %}
+        
+
+

@@ -1,0 +1,44 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="/product.css"/>
+{% endblock %}    
+
+{% block content %}
+    <div class="content">
+        <h4 style="margin-top: 60px">Editar Produto</h4>
+        <form action="/products/edit/{{product._id}}?_method=PUT" method="post">
+            <div class="row">
+                <p class="message-error">{{message}}</p>
+                <div class="col-md-3">
+                    <label class="form-label">Código do produto *</label>
+                    <input class="form-control" type="text" name="barcode" placeholder="Código do produto" value="{{product.barcode}}"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Nome do produto *</label>
+                    <input class="form-control" type="text" name="name" placeholder="Nome do produto *" value="{{product.name}}"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Preço de venda *</label>
+                    <input class="form-control" type="text" name="salePrice" placeholder="Preço de venda" value="{{product.salePrice}}"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Quantidade *</label>
+                    <input class="form-control" type="text" name="amount" placeholder="Quantidade" value="{{product.amount}}"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Data de Vencimento</label>
+                    <input class="form-control" type="date" name="expirationDate" placeholder="Data de validade" value="{{product.formattedExpirationDate}}"/>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 30px"> 
+                <button class="btn btn-primary" style="width: 100px" type="submit">Salvar</button>
+                <a href="/productslist" class="btn btn-danger" style="width: 100px; margin-left: 30px; color: #fff !important;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+        
+        

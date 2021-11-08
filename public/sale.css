@@ -1,0 +1,86 @@
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+.content {
+    margin-top: 60px;
+}
+
+form.search {
+    margin-bottom: 20px
+}
+
+strong {
+    font-size: 15px;
+}
+
+
+.box-sale {
+    border-radius: 10px;
+    background: #EAEEF1;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+div.data-product {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background: #fff;
+    padding: 15px;
+    margin-top: 15px
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.total strong {
+    background: #3BB5B4;
+    color: #174746;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+strong.balance {
+    padding: 10px;
+    background: #3BB5B4;
+    color: #174746;
+    border-radius: 10px;
+  
+}
+
+strong.sales {
+    border-radius: 10px;
+    padding: 10px;
+    background: #FFC447;
+    color: #634C1C;
+    margin-right: 10px;
+}
+
+a {
+    margin-top: 20px;
+}
+
+div.box-balance {
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+button.button-delete {
+    margin-top: 10px;
+}
+
+.box-descount {
+    margin-top: 5px;
+}
