@@ -7,7 +7,7 @@
 
     {% block content %}
         <div class="content">
-            <h4>Frente de Caixa</h4>
+            <h1>Frente de Caixa</h1>
             <form action="/cart" method="post" class="search">
                 <input class="form-control" type="text" placeholder="Código do produto" name="searchBarcode" value="{{searchBarcode}}" autofocus/>
                 <input class="form-control" type="text" placeholder="Nome do produto" name="nome" />
@@ -42,7 +42,7 @@
             <div class="items">
                 {% for item in cart.items %}
                     <div class="item">
-                        <a href="/products/{{item.product._id}}">
+                        <a href="#">
                             <span class="title">{{item.product.name}}</span>
                         </a>
 
@@ -73,7 +73,7 @@
 
                     <form action="/cart" method="POST">
                         <div class="change">
-                            <input type="text" placeholder="Troco" value="{{change}}" name="change"/>
+                            <input type="text" placeholder="TOTAL PAGO" value="{{change}}" name="change"/>
                             
                             <div class="totalChange">
                                 <p>Troco:</p> 

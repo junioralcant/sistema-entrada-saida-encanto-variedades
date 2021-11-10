@@ -6,14 +6,16 @@
 
 .content {
   margin-top: 60px;
+  width: 90%;
 }
 
 form input.form-control {
-  width: 250px;
+  width: 450px;
   margin-right: 20px;
 }
 
 form.search {
+  width: 100% !important;
   display: flex;
   margin-bottom: 20px;
 }
@@ -26,7 +28,9 @@ form.search {
   background: #eaeef1;
   padding: 20px;
   border-radius: 10px;
-  max-width: 1000px;
+  width: 95%;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .item {
@@ -35,7 +39,7 @@ form.search {
   justify-content: space-between;
   background: #ffffff;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 10px 20px;
 }
 
 .quantity-control {
@@ -48,7 +52,7 @@ form.search {
 
 .item form button {
   background: none;
-  font-size: 20px;
+  font-size: 35px;
 }
 
 button.delete {
@@ -59,10 +63,15 @@ button.delete {
   display: flex;
   justify-content: flex-end;
   font-weight: bold;
+  font-size: 50px;
 }
 
 .total p {
   margin-right: 10px;
+}
+
+.total span {
+  color: green;
 }
 
 .totalChange {
@@ -71,6 +80,7 @@ button.delete {
   display: flex;
   justify-content: flex-end;
   font-weight: bold;
+  font-size: 30px;
 }
 
 .descount {
@@ -85,18 +95,24 @@ button.delete {
   font-weight: bold;
 }
 
+.change span {
+  /* color: green; */
+}
+
 .descount input {
   padding: 5px;
-  width: 100px;
+  width: 200px;
   border-radius: 5px;
   border: 1px solid rgb(31, 30, 30);
 }
 
 .change input {
   padding: 5px;
-  width: 100px;
+  width: 200px;
   border-radius: 5px;
   border: 1px solid rgb(31, 30, 30);
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .finish {
@@ -105,5 +121,8 @@ button.delete {
 }
 
 .finish button {
+  width: 210px;
+  height: 60px;
+  font-size: 22px;
   margin-right: 20px;
 }
