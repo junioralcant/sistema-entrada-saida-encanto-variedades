@@ -5,8 +5,8 @@
 }
 
 .content {
-  margin-top: 60px;
-  width: 90%;
+  margin-top: 10px;
+  width: 99%;
 }
 .search {
   width: 100% !important;
@@ -28,7 +28,7 @@
 }
 
 .search form.barcode {
-  margin-right: -200px;
+  margin-right: -300px;
 }
 
 .table {
@@ -39,7 +39,7 @@
   background: #eaeef1;
   padding: 20px;
   border-radius: 10px;
-  width: 95%;
+  width: 100%;
   font-weight: bold;
   font-size: 25px;
 }
