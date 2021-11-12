@@ -78,31 +78,48 @@ class CartController {
   }
 
   async addOne(req, res) {
-    let product = await Product.findById(req.params.id);
-    let {quantity} = req.body;
+    const { searchBarcode } = req.body;
+    const { id } = req.params;
 
+    let product;
 
-    var produc = [product]
-
-    const teste  = produc.map(async value => {
-      value.teste = 100;
-      return value
-    })
-
-    product = await Promise.all(teste);
-
-    let { cart } = req.session;
-
-    if(!quantity) {
-      quantity = 1;
+    if(searchBarcode) {
+        product = await Product.findOne({barcode: searchBarcode});
     }
 
-    console.log(quantity);
+    if(id) {
+       product = await Product.findById(req.params.id);
+    }
 
+    console.log(product);
 
-    cart = Cart.init(cart).addOne({product, quantity: quantity});
+    // console.log(product);
+    let {quantity} = req.body;
 
-    req.session.cart = cart;
+    if(!product) {
+      return;
+    } else {
+      var produc = [product]
+
+      const teste  = produc.map(async value => {
+        value.teste = 100;
+        return value
+      })
+
+      product = await Promise.all(teste);
+
+      let { cart } = req.session;
+
+      if(!quantity) {
+        quantity = 1;
+      }
+
+      console.log(quantity);
+
+      cart = Cart.init(cart).addOne({product, quantity: quantity});
+
+      req.session.cart = cart;
+    }
 
     return res.redirect("/cart");
   }

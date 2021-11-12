@@ -8,16 +8,27 @@
   margin-top: 60px;
   width: 90%;
 }
-
-form input.form-control {
-  width: 450px;
-  margin-right: 20px;
-}
-
-form.search {
+.search {
   width: 100% !important;
   display: flex;
   margin-bottom: 20px;
+  /* flex-direction: row; */
+}
+
+.search input {
+  width: 450px;
+  height: 60px;
+  margin-right: 20px;
+}
+
+.search form {
+  width: 100% !important;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search form.barcode {
+  margin-right: -200px;
 }
 
 .table {

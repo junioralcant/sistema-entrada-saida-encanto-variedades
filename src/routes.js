@@ -52,6 +52,7 @@ routes.get("/productssoldslist", ProductSoldController.indexProduct);
 routes.get("/cart", CartController.index);
 routes.post("/cart", CartController.index);
 routes.post("/cart/add-one/:id", CartController.addOne);
+routes.post("/cart/add-one-barcode", CartController.addOne);
 routes.post("/cart/remove-one/:id", CartController.removeOne);
 routes.post("/cart/delete/:id", CartController.delete);
 
