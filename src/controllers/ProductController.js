@@ -14,6 +14,7 @@ class ProductController {
   async index(req, res) {
     const filters = {};
     let filterActive = false;
+    let message = "";
 
     if (req.body.nome) {
       let products = await Product.find({
@@ -86,13 +87,18 @@ class ProductController {
 
     products = await Promise.all(getProductsPromise);
 
+    const {sucesso} = req.params;
+
     return res.render("product/list", {
       products: products,
+      sucesso
     });
   }
 
   async store(req, res) {
     const { name, salePrice, amount, expirationDate, barcode } = req.body;
+
+    let sucesso = "";
 
     if (!name || !salePrice || !amount) {
       let products = await Product.find();
@@ -119,14 +125,48 @@ class ProductController {
       });
     }
 
-    await Product.create({
-      ...req.body,
-      expirationDate: !req.body.expirationDate
-        ? null
-        : moment(req.body.expirationDate).format(),
-    });
+    try {
+      await Product.create({
+        ...req.body,
+        expirationDate: !req.body.expirationDate
+          ? null
+          : moment(req.body.expirationDate).format(),
+      });
+    } catch (error) {
+      let products = await Product.find();
 
-    return res.redirect("/productslist");
+      const getProductsPromise = products.map(async (product) => {
+        product.formattedExpirationDate = moment(product.expirationDate).format(
+          "DD-MM-YYYY"
+        );
+        product.formattedPrice = formatCurrency.brl(product.price);
+        product.formattedSalePrice = formatCurrency.brl(product.salePrice);
+        return product;
+      });
+
+      products = await Promise.all(getProductsPromise);
+
+      return res.render("product/list", {
+        name,
+        salePrice,
+        amount,
+        barcode,
+        products: products,
+        expirationDate: moment(expirationDate).format("YYYY-MM-DD"),
+        message: "Erro ao casdastrar produto. Verifique se no cadastro de preço você colocou vírgula no lugar de ponto.",
+      });
+    }
+
+    // await Product.create({
+    //   ...req.body,
+    //   expirationDate: !req.body.expirationDate
+    //     ? null
+    //     : moment(req.body.expirationDate).format(),
+    // });
+
+    sucesso = "Produto cadastrado com sucesso!";
+
+    return res.redirect(`/productslist/${sucesso}`);
   }
 
   async edit(req, res) {

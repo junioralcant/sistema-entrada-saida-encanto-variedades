@@ -40,6 +40,7 @@ routes.put("/categorys/edit/:id", CategoryController.update);
 routes.delete("/categorys/delete/:id", CategoryController.destroy);
 
 routes.get("/productslist", ProductController.index);
+routes.get("/productslist/:sucesso", ProductController.index);
 routes.post("/productslist", ProductController.index);
 routes.get("/products", ProductController.create);
 routes.post("/products", ProductController.store);
