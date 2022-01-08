@@ -53,17 +53,27 @@
                         </a>
 
                         <span class="quantity">QTD: {{item.quantity}}</span>
+                        
+                        {% if item.product._id == "61d99adc1b51350e9cf7db67" %}
+                            <form action="/cart/add-one/{{item.product._id}}" method="post">
+                                <div class="descount">
+                                    <input type="text" placeholder="Valor" name="addValue"/>
+                                </div>
+                            </form>
+                        {% endif %}
 
                         <span class="price">Valor: {{item.formattedPrice}}</span>
 
                         <div class="quantity-control">
-                            <form action="/cart/remove-one/{{item.product._id}}" method="post">
-                                <button class="remove"> <i class="bi bi-clipboard-minus"></i> </button>
-                            </form>
+                            {% if item.product._id != "61d99adc1b51350e9cf7db67" %}
+                                <form action="/cart/remove-one/{{item.product._id}}" method="post">
+                                    <button class="remove"> <i class="bi bi-clipboard-minus"></i> </button>
+                                </form>
 
-                            <form action="/cart/add-one/{{item.product._id}}" method="post">
-                                <button type="submit"> <i class="bi bi-clipboard-plus"></i> </button>
-                            </form>
+                                <form action="/cart/add-one/{{item.product._id}}" method="post">
+                                    <button type="submit"> <i class="bi bi-clipboard-plus"></i> </button>
+                                </form>
+                            {% endif %}
                         </div>
 
                         <form class="trash" action="/cart/delete/{{item.product._id}}" method="POST">
@@ -86,6 +96,10 @@
                                 <span>{{changeFormate}}</span>
                             </div>
                         </div>
+                    </form>
+
+                     <form  action="/cart/add-one/{{idVariedProduct}}" method="POST">
+                        <button class="btn btn-secondary mt-3"> Produtos Variados </button>
                     </form>
                 
                     <form  action="/sales" method="POST">

@@ -1,3 +1,5 @@
+let addValue = 0;
+let addValueDelete = 0;
 const Cart = {
   init(oldCart) {
     if (oldCart) {
@@ -40,11 +42,23 @@ const Cart = {
 
     if (inCart.quantity >= product.product[0].amount) return this; 
 
-    inCart.quantity++;
-    inCart.price = inCart.product.salePrice * inCart.quantity;
+
+
+    if(String(product.product[0]._id) === String(product.idVariedProduct)) {
+      addValue = Number(product.addValue);
+      addValueDelete += addValue;
+      inCart.price += addValue; 
+      this.total.price += addValue;
+      if(inCart.price > 0 && addValue > 0) inCart.quantity++;
+    } else {
+      inCart.quantity++
+      inCart.price = inCart.product.salePrice * inCart.quantity;
+      this.total.price += inCart.product.salePrice;
+    }
 
     this.total.quantity++;
-    this.total.price += inCart.product.salePrice;
+
+    // console.log(product);
 
     return this;
   },
@@ -69,21 +83,38 @@ const Cart = {
 
     return this;
   },
-  delete(productId) {
-    const inCart = this.items.find(
-      (item) => String(item.product._id) == String(productId) 
+  delete(product) {
+    let inCart = this.items.find(
+      (item) => String(item.product._id) === String(product.id) 
     );
+
+    // console.log(inCart);
 
     if (!inCart) return this;
 
     if (this.items.length > 0) {
+    // console.log("Caio aq");
       this.total.quantity -= inCart.quantity;
-      this.total.price -= inCart.product.salePrice * inCart.quantity;
+      if(String(inCart.product._id) === String(product.variedProductID)) {
+        inCart.price = 0;
+        inCart.formattedPrice  = 0;
+        this.total.price -= addValueDelete;
+        addValue = 0;
+        addValueDelete = 0;
+      } else {
+        this.total.price -= inCart.product.salePrice * inCart.quantity;
+      }
     }
 
+    // console.log(inCart);
+    // console.log(this.items); 
+
     this.items = this.items.filter(
-      (item) => inCart.product._id != item.product._id
+      (item) => String(inCart.product._id) != String(item.product._id)
     );
+
+    // console.log(this.items); 
+
     return this;
   },
 };

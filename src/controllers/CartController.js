@@ -2,11 +2,14 @@ const moment = require("moment");
 const Cart = require("../lib/cart");
 const Product = require("../models/Product");
 const formatCurrency = require("../lib/formatCurrency");
+const { insertMany } = require("../models/Product");
 
 class CartController {
   async index(req, res) {
     const filters = {};
     const {change} = req.body;
+    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+
 
     if (req.body.nome) {
       filters.nome = new RegExp(req.body.nome, "i");
@@ -29,7 +32,7 @@ class CartController {
 
       cart = Cart.init(cart);
 
-      return res.render("cart/list", { cart, products });
+      return res.render("cart/list", { cart, products, idVariedProduct: variedProduct });
     }
 
     if (req.body.searchBarcode) {
@@ -53,7 +56,9 @@ class CartController {
 
       cart = Cart.init(cart);
 
-      return res.render("cart/list", { cart, products });
+      console.log(cart);
+
+      return res.render("cart/list", { cart, products, idVariedProduct: variedProduct._id });
     }
 
     let { cart } = req.session;
@@ -74,12 +79,28 @@ class CartController {
       changeFormate = formatCurrency.brl(0);
     }
 
-    return res.render("cart/list", { cart, changeFormate, change });
+
+    return res.render("cart/list", { cart, changeFormate, change, idVariedProduct: variedProduct._id });
   }
 
   async addOne(req, res) {
-    const { searchBarcode } = req.body;
+    let { searchBarcode, addValue } = req.body;
     const { id } = req.params;
+    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+
+    let idVariedProduct = ''
+
+    // console.log(varie  dProduct);
+
+    if(variedProduct) {
+      idVariedProduct = variedProduct._id;
+    }
+
+    if(!addValue){
+      addValue = 0;
+    }
+
+    // console.log(req.body);
 
     let product;
 
@@ -90,8 +111,6 @@ class CartController {
     if(id) {
        product = await Product.findById(req.params.id);
     }
-
-    console.log(product);
 
     // console.log(product);
     let {quantity} = req.body;
@@ -114,9 +133,7 @@ class CartController {
         quantity = 1;
       }
 
-      console.log(quantity);
-
-      cart = Cart.init(cart).addOne({product, quantity: quantity});
+      cart = Cart.init(cart).addOne({product, quantity: quantity, addValue, idVariedProduct});
 
       req.session.cart = cart;
     }
@@ -143,9 +160,30 @@ class CartController {
 
     let { cart } = req.session;
 
+    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+
+    // console.log(variedProduct);
+
+    // cart.items.map(item => {
+    //   // console.log(item);
+    //   if(String(item.product._id) === String(id) ) {
+    //     console.log("teste");
+    //     item.price = 0;
+    //   }
+    // })
+
+    // if(id === variedProduct._id) {
+
+    // }
+
+
     if (!cart) return res.redirect("/cart");
 
-    cart = Cart.init(cart).delete(id);
+    // cart = Cart.init(cart).addOne({product: [variedProduct], addValue: 0 , idVariedProduct: variedProduct._id, delete: true});
+
+    cart = Cart.init(cart).delete({id, variedProductID: variedProduct._id});
+
+    // console.log(cart);
 
     req.session.cart = cart;
 

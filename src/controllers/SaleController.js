@@ -117,11 +117,13 @@ class SaleController {
 
     await Entrance.create({
       sale: sale._id,
-      value: cart.total.price - descount,
+      value: cart.total.price - (cart.total.price / 100) * descount,
     });
 
+    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+
     cart.items.map(async (item) => {
-      cart = Cart.init(cart).delete(item.product._id);
+      cart = Cart.init(cart).delete({id: item.product._id, variedProductID: variedProduct._id });
       req.session.cart = cart;
     });
 
