@@ -162,8 +162,6 @@ class SaleController {
 
     sale.sale.products = await Promise.all(getSalesPromise);
 
-    console.log(sale);
-
     return res.render("sale/show", {
       sale: sale,
       total: formatCurrency.brl(sale.sale.total),

@@ -26,7 +26,8 @@ p {
 }
 
 form.search {
-    margin-bottom: 20px
+    margin-bottom: 20px;
+   
 }
 
 strong {
@@ -47,6 +48,8 @@ strong {
     margin-right: 5px;
     margin-bottom: 10px;
 }
+
+
 
 div.data-product {
     display: flex;

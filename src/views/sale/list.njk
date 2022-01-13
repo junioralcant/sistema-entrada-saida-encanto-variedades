@@ -55,9 +55,13 @@
                             <strong>Desconto: {{sale.sale.descount}} %</strong>
                         </div>
 
-                        <div class="row box-button">
+                        <div class="box-button">
                             <form  action="/sales/delete/{{sale._id}}?_method=DELETE" method="POST" onSubmit="deleteSale(event)">
                                 <button class="btn btn-danger button-delete">Deletar</button>
+                            </form>
+
+                            <form style="margin-top: 5px"  action="/sales/{{sale._id}}?_method=GET" method="GET" target="_blank">
+                                <button style=" width: 100px;" class="btn btn-secondary">Imprimir</button>
                             </form>
                         </div>
                         
@@ -67,7 +71,6 @@
                                     <strong>QTD: {{product.quantity}}</strong>
                                     <strong>Valor: {{product.formattedPrice}}</strong>
                                 </div>  
-                            
                         {% endfor %}
                     </div>
                 {% endif %}
