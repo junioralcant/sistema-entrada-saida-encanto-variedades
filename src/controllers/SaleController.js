@@ -152,6 +152,25 @@ class SaleController {
     return res.redirect("/sales");
   }
 
+  async show(req, res) {
+    let sale = await Sale.findById(req.params.id).populate("sale.products.product");
+
+    const getSalesPromise = sale.sale.products.map((product) => {
+        product.formattedPrice = formatCurrency.brl(product.price);
+        return product;
+      });
+
+    sale.sale.products = await Promise.all(getSalesPromise);
+
+    console.log(sale);
+
+    return res.render("sale/show", {
+      sale: sale,
+      total: formatCurrency.brl(sale.sale.total),
+      formattedDate: moment(sale.createdAt).format("DD-MM-YYYY"),
+    });
+  }
+
   async destroyAll(req, res) {
     let { cart } = req.session;
 

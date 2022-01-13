@@ -1,0 +1,54 @@
+
+
+{% block head %}
+    <title>Vendas</title>
+    <link rel="stylesheet" href="/saleshow.css"/>
+{% endblock %}
+
+<script>
+    window.print();
+</script>
+
+{% block content %}
+    <div class="content">
+        <strong>ENCANTO VARIEDADES</strong>
+
+        <div class="row box-sale-row">
+            <p>AVENIDA PIQUI N 588 - CEP: 65470-000</p>
+            <p>São Mateus do Maranhão(MA) - (99) 98168-4525</p>
+            <p>CNPJ:  43.067.581/0001-91</p>
+            <p>Cliente: Cliente Balcão</p>
+            <p style="margin-bottom: -20px">{{formattedDate}}</p>
+            <table>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Qtd</th>
+                    <th>Valor</th>
+                </tr>
+
+                  {% if sale != null %}
+                        {% for product in sale.sale.products %}
+                            <tr>
+                                <td>{{product.product.name}}</td>
+                                <td>{{product.quantity}}</td>
+                                <td>{{product.formattedPrice}}</td>
+                            </tr>
+                        {% endfor %}
+                        <br/>
+                   
+                {% endif %}
+            </table>
+                <p>___________________________________________</p>
+                <strong>Total: {{total}}</strong>
+                <p>Venda de balcão</p>
+                <p style=" font-weight: bold">Confira seu troco</p>
+                <br/>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}        
+
+        
+
+

@@ -19,6 +19,9 @@ routes.get("/login", SessionController.loginForm);
 routes.post("/logout", SessionController.logout);
 routes.post("/session", SessionController.store);
 
+routes.get("/sales/:id", SaleController.show);
+
+
 routes.use(middleware);
 
 routes.get("/", (req, res) => {
