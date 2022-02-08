@@ -28,6 +28,10 @@ routes.get("/", (req, res) => {
   return res.render("home/index");
 });
 
+routes.get("/notpermission", (req, res) => {
+  return res.render("notPermission/index");
+});
+
 routes.get("/userslist", UserController.index);
 routes.get("/users", UserController.create);
 routes.post("/users", UserController.store);

@@ -30,7 +30,7 @@ class SessionController {
       });
     }
 
-    req.session.userId = user._id;
+    req.session.userId = user;
 
     return resp.redirect("/");
   }

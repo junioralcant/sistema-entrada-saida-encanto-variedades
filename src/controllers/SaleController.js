@@ -7,9 +7,13 @@ const formatCurrency = require("../lib/formatCurrency");
 
 class SaleController {
   async index(req, res) {
+    const userLogged = req.session.userId;
+    
     const filters = {};
 
     let total = 0;
+
+    
 
     const { startDate, finalDate } = req.body;
 
@@ -83,6 +87,7 @@ class SaleController {
       dateFilter: dateFilter,
       startDate,
       finalDate,
+      userLoggedType: userLogged.type,
     });
   }
 

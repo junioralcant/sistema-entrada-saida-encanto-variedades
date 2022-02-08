@@ -5,6 +5,12 @@ const formatCurrency = require("../lib/formatCurrency");
 
 class EntranceAndExitController {
   async index(req, res) {
+    const userLogged = req.session.userId;
+    
+    if(userLogged.type !== "ADMIN") {
+      return res.render("notPermission/index");
+    }
+    
     let items = {
       entrances: [],
       exits: [],

@@ -4,6 +4,11 @@ const formatCurrency = require("../lib/formatCurrency");
 
 class ExitController {
   async index(req, res) {
+    const userLogged = req.session.userId;
+    
+    if(userLogged.type !== "ADMIN") {
+      return res.render("notPermission/index");
+    }
     const filters = {};
 
     let total = 0;
