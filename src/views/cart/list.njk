@@ -82,6 +82,26 @@
                     </div>
                     
                 {% endfor %}
+                <div class="box-produtctsVaried" >
+                    <div class="box-produtctsVaried-content">
+                        <span>Produtos Variados</span>
+                        {% for item in cart.productsVariedValues %}
+                            {% if item.value < 0  or item.value > 0 %}
+                                    <div class="item-value-product-varied">
+                                        <div class="box-content">
+                                            <div class="content">
+                                                <span class="title">{{item.formattedValue}}</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            {% endif %}
+                        {% endfor %}
+                        <span class="totalProductsVaried">Total: {{cart.totalproductsVariedFormated}}</span>
+                    </div>
+                </div>
+
+
                 <div class="total">
                     <p>Total:</p> 
                     <span>{{cart.total.formattedPrice}}</span>
@@ -116,6 +136,7 @@
                             </form>
                         </div>
             </div>
+
         </div>
     {% endblock %}
 
@@ -125,6 +146,8 @@
             alert("teste");
         }
     </script>
+
+{# id produto variado producao 61d99adc1b51350e9cf7db67 #}
 
 
        

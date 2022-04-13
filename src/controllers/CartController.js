@@ -10,7 +10,6 @@ class CartController {
     const {change} = req.body;
     const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
 
-
     if (req.body.nome) {
       filters.nome = new RegExp(req.body.nome, "i");
 
@@ -31,6 +30,12 @@ class CartController {
       let { cart } = req.session;
 
       cart = Cart.init(cart);
+
+      cart.productsVariedValues.map((item) => {
+        item.formattedValue = formatCurrency.brl(item.value);
+      });
+  
+      cart.totalproductsVariedFormated = formatCurrency.brl(cart.totalProdutsVaried);
 
       return res.render("cart/list", { cart, products, idVariedProduct: variedProduct });
     }
@@ -56,6 +61,12 @@ class CartController {
 
       cart = Cart.init(cart);
 
+      cart.productsVariedValues.map((item) => {
+        item.formattedValue = formatCurrency.brl(item.value);
+      });
+  
+      cart.totalproductsVariedFormated = formatCurrency.brl(cart.totalProdutsVaried);
+
       console.log(cart);
 
       return res.render("cart/list", { cart, products, idVariedProduct: variedProduct._id });
@@ -70,6 +81,12 @@ class CartController {
     });
 
     cart.total.formattedPrice = formatCurrency.brl(cart.total.price);
+
+    cart.productsVariedValues.map((item) => {
+      item.formattedValue = formatCurrency.brl(item.value);
+    });
+
+    cart.totalproductsVariedFormated = formatCurrency.brl(cart.totalProdutsVaried);
 
     let changeFormate = 0;
 

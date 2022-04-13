@@ -1,3 +1,5 @@
+const uuid  = require("uuid");
+
 let addValue = 0;
 let addValueDelete = 0;
 const Cart = {
@@ -5,8 +7,12 @@ const Cart = {
     if (oldCart) {
       this.items = oldCart.items;
       this.total = oldCart.total;
+      this.productsVariedValues =  oldCart.productsVariedValues ? oldCart.productsVariedValues : [{}];;
+      this.totalProdutsVaried = oldCart.totalProdutsVaried;
     } else {
       this.items = [];
+      this.productsVariedValues = [{}];
+      this.totalProdutsVaried = 0;
       this.total = {
         quantity: 0,
         price: 0,
@@ -46,9 +52,11 @@ const Cart = {
 
     if(String(product.product[0]._id) === String(product.idVariedProduct)) {
       addValue = Number(product.addValue);
+      this.productsVariedValues.push({id: uuid.v4() ,value: addValue});
       addValueDelete += addValue;
       inCart.price += addValue; 
       this.total.price += addValue;
+      this.totalProdutsVaried += addValue;
       if(inCart.price > 0 && addValue > 0) inCart.quantity++;
     } else {
       inCart.quantity++
@@ -57,8 +65,6 @@ const Cart = {
     }
 
     this.total.quantity++;
-
-    // console.log(product);
 
     return this;
   },
@@ -101,6 +107,8 @@ const Cart = {
         this.total.price -= addValueDelete;
         addValue = 0;
         addValueDelete = 0;
+        this.productsVariedValues = [{}];
+        this.totalProdutsVaried = 0;
       } else {
         this.total.price -= inCart.product.salePrice * inCart.quantity;
       }

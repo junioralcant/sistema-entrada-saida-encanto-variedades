@@ -177,10 +177,12 @@ class SaleController {
   async destroyAll(req, res) {
     let { cart } = req.session;
 
+    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+
     if (cart.items <= 0) return res.redirect("/cart");
 
     cart.items.map(async (item) => {
-      cart = Cart.init(cart).delete(item.product._id);
+      cart = Cart.init(cart).delete({id: item.product._id , variedProductID: variedProduct._id});
       req.session.cart = cart;
     });
 
