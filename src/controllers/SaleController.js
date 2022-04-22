@@ -34,7 +34,7 @@ class SaleController {
 
     let sales = await Sale.paginate(filters, {
       page: req.query.page || 1,
-      limit: parseInt(req.query.limit_page) || 2000,
+      limit: parseInt(req.query.limit_page) || 1000000000,
       populate: ["sale.products.product"],
       sort: "-createdAt",
     });
