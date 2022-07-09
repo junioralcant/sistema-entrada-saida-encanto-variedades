@@ -1,19 +1,17 @@
-const moment = require("moment");
-const Sale = require("../models/Sale");
-const Cart = require("../lib/cart");
-const Product = require("../models/Product");
-const Entrance = require("../models/Entrance");
-const formatCurrency = require("../lib/formatCurrency");
+const moment = require('moment');
+const Sale = require('../models/Sale');
+const Cart = require('../lib/cart');
+const Product = require('../models/Product');
+const Entrance = require('../models/Entrance');
+const formatCurrency = require('../lib/formatCurrency');
 
 class SaleController {
   async index(req, res) {
     const userLogged = req.session.userId;
-    
+
     const filters = {};
 
     let total = 0;
-
-    
 
     const { startDate, finalDate } = req.body;
 
@@ -21,11 +19,11 @@ class SaleController {
       filters.createdAt = {};
 
       const startDate = moment(req.body.startDate).format(
-        "YYYY-MM-DDT00:mm:ss.SSSZ"
+        'YYYY-MM-DDT00:mm:ss.SSSZ'
       );
 
       const finalDate = moment(req.body.finalDate).format(
-        "YYYY-MM-DDT23:59:ss.SSSZ"
+        'YYYY-MM-DDT23:59:ss.SSSZ'
       );
 
       filters.createdAt.$gte = startDate;
@@ -35,12 +33,14 @@ class SaleController {
     let sales = await Sale.paginate(filters, {
       page: req.query.page || 1,
       limit: parseInt(req.query.limit_page) || 1000000000,
-      populate: ["sale.products.product"],
-      sort: "-createdAt",
+      populate: ['sale.products.product'],
+      sort: '-createdAt',
     });
 
     const getSalesPromise = sales.docs.map(async (sale) => {
-      sale.formattedDate = moment(sale.createdAt).format("DD-MM-YYYY");
+      sale.formattedDate = moment(sale.createdAt).format(
+        'DD-MM-YYYY'
+      );
       sale.sale.products.map((product) => {
         product.formattedPrice = formatCurrency.brl(product.price);
       });
@@ -68,7 +68,10 @@ class SaleController {
 
     if (!startDate || !finalDate) {
       sales = sales.map((sale) => {
-        if (moment(sale.createdAt).month() === moment(Date.now()).month()) {
+        if (
+          moment(sale.createdAt).month() ===
+          moment(Date.now()).month()
+        ) {
           total += sale.sale.total;
           return sale;
         }
@@ -81,7 +84,7 @@ class SaleController {
       if (sale != undefined) salesFilter.push(sale);
     });
 
-    return res.render("sale/list", {
+    return res.render('sale/list', {
       sales: salesFilter,
       total: formatCurrency.brl(total),
       dateFilter: dateFilter,
@@ -95,7 +98,7 @@ class SaleController {
     let { cart } = req.session;
     const { descount } = req.body;
 
-    if (cart.items <= 0) return res.redirect("/cart");
+    if (cart.items <= 0) return res.redirect('/cart');
 
     const sale = await Sale.create({
       sale: {
@@ -107,6 +110,12 @@ class SaleController {
     await Promise.all(
       cart.items.map(async (item) => {
         sale.sale.products.push(item);
+      })
+    );
+
+    await Promise.all(
+      cart.productsVariedValues.map(async (item) => {
+        sale.sale.productsVariedValues.push(item);
       })
     );
 
@@ -125,14 +134,19 @@ class SaleController {
       value: cart.total.price - (cart.total.price / 100) * descount,
     });
 
-    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+    const variedProduct = await Product.findOne({
+      name: 'PRODUTOS VARIADOS',
+    });
 
     cart.items.map(async (item) => {
-      cart = Cart.init(cart).delete({id: item.product._id, variedProductID: variedProduct._id });
+      cart = Cart.init(cart).delete({
+        id: item.product._id,
+        variedProductID: variedProduct._id,
+      });
       req.session.cart = cart;
     });
 
-    return res.redirect("/cart");
+    return res.redirect('/cart');
   }
 
   async destroy(req, res) {
@@ -154,39 +168,46 @@ class SaleController {
 
     await Entrance.findByIdAndRemove(entrance[0]._id);
 
-    return res.redirect("/sales");
+    return res.redirect('/sales');
   }
 
   async show(req, res) {
-    let sale = await Sale.findById(req.params.id).populate("sale.products.product");
+    let sale = await Sale.findById(req.params.id).populate(
+      'sale.products.product'
+    );
 
     const getSalesPromise = sale.sale.products.map((product) => {
-        product.formattedPrice = formatCurrency.brl(product.price);
-        return product;
-      });
+      product.formattedPrice = formatCurrency.brl(product.price);
+      return product;
+    });
 
     sale.sale.products = await Promise.all(getSalesPromise);
 
-    return res.render("sale/show", {
+    return res.render('sale/show', {
       sale: sale,
       total: formatCurrency.brl(sale.sale.total),
-      formattedDate: moment(sale.createdAt).format("DD-MM-YYYY"),
+      formattedDate: moment(sale.createdAt).format('DD-MM-YYYY'),
     });
   }
 
   async destroyAll(req, res) {
     let { cart } = req.session;
 
-    const variedProduct = await Product.findOne({name: "PRODUTOS VARIADOS"});
+    const variedProduct = await Product.findOne({
+      name: 'PRODUTOS VARIADOS',
+    });
 
-    if (cart.items <= 0) return res.redirect("/cart");
+    if (cart.items <= 0) return res.redirect('/cart');
 
     cart.items.map(async (item) => {
-      cart = Cart.init(cart).delete({id: item.product._id , variedProductID: variedProduct._id});
+      cart = Cart.init(cart).delete({
+        id: item.product._id,
+        variedProductID: variedProduct._id,
+      });
       req.session.cart = cart;
     });
 
-    return res.redirect("/cart");
+    return res.redirect('/cart');
   }
 }
 

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const SaleSchema = new mongoose.Schema({
   sale: {
@@ -7,13 +7,14 @@ const SaleSchema = new mongoose.Schema({
       {
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
+          ref: 'Product',
           required: true,
         },
         quantity: Number,
         price: Number,
       },
     ],
+    productsVariedValues: [],
     descount: Number,
     total: Number,
   },
@@ -25,4 +26,4 @@ const SaleSchema = new mongoose.Schema({
 });
 
 SaleSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model("Sale", SaleSchema);
+module.exports = mongoose.model('Sale', SaleSchema);

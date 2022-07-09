@@ -29,10 +29,24 @@
                   {% if sale != null %}
                         {% for product in sale.sale.products %}
                             <tr>
-                                <td>{{product.product.name}}</td>
+                                <td>
+                                    {{product.product.name}}
+                                </td>
+                                   
                                 <td>{{product.quantity}}</td>
                                 <td>{{product.formattedPrice}}</td>
+
+                      
                             </tr>
+                                 {% if product.product.name == "PRODUTOS VARIADOS"%}
+                                    {% if sale.sale.productsVariedValues%}
+                                        {% for productsVaried in sale.sale.productsVariedValues %}
+                                            {% if productsVaried.value > 0 %}
+                                                <td class="productsVaried">{{productsVaried.formattedValue}}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                 {% endif %}
                         {% endfor %}
                         <br/>
                    
