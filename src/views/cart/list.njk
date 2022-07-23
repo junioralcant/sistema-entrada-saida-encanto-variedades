@@ -54,7 +54,7 @@
 
                         <span class="quantity">QTD: {{item.quantity}}</span>
                         
-                        {% if item.product._id == "61d99adc1b51350e9cf7db67" %}
+                        {% if item.product._id == "62dc70f724f6df28645c0932" %}
                             <form action="/cart/add-one/{{item.product._id}}" method="post">
                                 <div class="descount">
                                     <input type="text" placeholder="Valor" name="addValue"/>
@@ -65,7 +65,7 @@
                         <span class="price">Valor: {{item.formattedPrice}}</span>
 
                         <div class="quantity-control">
-                            {% if item.product._id != "61d99adc1b51350e9cf7db67" %}
+                            {% if item.product._id != "62dc70f724f6df28645c0932" %}
                                 <form action="/cart/remove-one/{{item.product._id}}" method="post">
                                     <button class="remove"> <i class="bi bi-clipboard-minus"></i> </button>
                                 </form>
@@ -147,7 +147,7 @@
         }
     </script>
 
-{# id produto variado producao 61d99adc1b51350e9cf7db67 #}
+{# id produto variado producao 62dc70f724f6df28645c0932 #}
 
 {# id produto variado desenvolvimento 61c1d87c33c9650bc10e2bb6 #}
 
