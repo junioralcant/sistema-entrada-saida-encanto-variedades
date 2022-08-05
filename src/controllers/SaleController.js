@@ -33,7 +33,7 @@ class SaleController {
     let sales = await Sale.paginate(filters, {
       page: req.query.page || 1,
       limit: parseInt(req.query.limit_page) || 1000000000,
-      populate: ['sale.products.product'],
+      populate: ['sale.products.product', 'seller'],
       sort: '-createdAt',
     });
 
@@ -96,7 +96,7 @@ class SaleController {
 
   async store(req, res) {
     let { cart } = req.session;
-    const { descount } = req.body;
+    const { descount, seller: sellerId } = req.body;
 
     if (cart.items <= 0) return res.redirect('/cart');
 
@@ -106,6 +106,12 @@ class SaleController {
         descount,
       },
     });
+
+    if (sellerId) {
+      sale.seller = sellerId;
+      sale.sellerCommission = 4;
+      await sale.save();
+    }
 
     await Promise.all(
       cart.items.map(async (item) => {
@@ -146,6 +152,8 @@ class SaleController {
       req.session.cart = cart;
     });
 
+    console.log(sale);
+
     return res.redirect('/cart');
   }
 
@@ -172,9 +180,9 @@ class SaleController {
   }
 
   async show(req, res) {
-    let sale = await Sale.findById(req.params.id).populate(
-      'sale.products.product'
-    );
+    let sale = await Sale.findById(req.params.id)
+      .populate('sale.products.product')
+      .populate('seller');
 
     const getSalesPromise = sale.sale.products.map((product) => {
       product.formattedPrice = formatCurrency.brl(product.price);

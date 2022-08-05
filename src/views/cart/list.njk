@@ -110,7 +110,6 @@
                     <form action="/cart" method="POST">
                         <div class="change">
                             <input type="text" placeholder="TOTAL PAGO" value="{{change}}" name="change"/>
-                            
                             <div class="totalChange">
                                 <p>Troco:</p> 
                                 <span>{{changeFormate}}</span>
@@ -125,7 +124,16 @@
                     <form  action="/sales" method="POST">
 
                         <div class="descount">
-                            <input type="text" placeholder="" name="descount"/>
+                            <input class="form-control" type="text" placeholder="" name="descount"/>
+                        </div>
+
+                        <div class="col-md-3">
+                            <select  name="seller">
+                                <option value="">Selecione vendedor</option>
+                                {% for seller in sellers %}
+                                    <option value="{{seller._id}}">{{seller.name}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
 
                         <div class="finish">

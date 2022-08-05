@@ -19,6 +19,17 @@ const SaleSchema = new mongoose.Schema({
     total: Number,
   },
 
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Seller',
+    default: null,
+  },
+
+  sellerCommission: {
+    type: Number,
+    default: 0,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

@@ -1,0 +1,24 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="/product.css"/>
+{% endblock %}    
+
+
+{% block content %}
+    <div class="content">
+        <h1>Atualizar vendedor</h1>
+        <form action="/sellers/edit/{{user._id}}?_method=PUT" method="post">
+            <div class="col-md-3">
+                <label class="form-label">Nome *</label>
+                <input class="form-control" type="text" name="name" placeholder="Infome o nome do vendedor" value="{{user.name}}"/>
+            </div>
+
+
+            <div class="row" style="margin-top: 30px"> 
+                <button class="btn btn-primary" style="width: 100px" type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@ const Cart = require('../lib/cart');
 const Product = require('../models/Product');
 const formatCurrency = require('../lib/formatCurrency');
 const { insertMany } = require('../models/Product');
+const Seller = require('../models/Seller');
 
 class CartController {
   async index(req, res) {
@@ -11,6 +12,8 @@ class CartController {
     const variedProduct = await Product.findOne({
       name: 'PRODUTOS VARIADOS',
     });
+
+    const sellers = await Seller.find();
 
     if (req.body.nome) {
       filters.nome = new RegExp(req.body.nome, 'i');
@@ -45,6 +48,7 @@ class CartController {
         cart,
         products,
         idVariedProduct: variedProduct,
+        sellers,
       });
     }
 
@@ -79,12 +83,11 @@ class CartController {
         cart.totalProdutsVaried
       );
 
-      console.log(cart);
-
       return res.render('cart/list', {
         cart,
         products,
         idVariedProduct: variedProduct._id,
+        sellers,
       });
     }
 
@@ -121,6 +124,7 @@ class CartController {
       changeFormate,
       change,
       idVariedProduct: variedProduct._id,
+      sellers,
     });
   }
 

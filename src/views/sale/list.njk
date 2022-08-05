@@ -58,6 +58,10 @@
                             <strong>Desconto: {{sale.sale.descount}} %</strong>
                         </div>
 
+                        <div class="box-descount">
+                            <strong>Vendedor: {{sale.seller.name}}</strong>
+                        </div>
+
                         <div class="box-button">
                             <form  action="/sales/delete/{{sale._id}}?_method=DELETE" method="POST" onSubmit="deleteSale(event)">
                                 <button class="btn btn-danger button-delete">Deletar</button>
