@@ -152,8 +152,6 @@ class SaleController {
       req.session.cart = cart;
     });
 
-    console.log(sale);
-
     return res.redirect('/cart');
   }
 
