@@ -45,7 +45,9 @@ class SellerController {
       });
     }
 
-    return res.redirect('/');
+    await Seller.create(req.body);
+
+    return res.redirect('/sellerslist');
   }
 
   async edit(req, res) {
